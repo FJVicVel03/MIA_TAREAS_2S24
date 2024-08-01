@@ -5,31 +5,46 @@ start_time = time.perf_counter()
 
 class BitVector:
     def __init__(self, size):
+        # Inicializa un vector de bits con el tamaño especificado
         self.size = size
         self.vector = [0] * ((size // 32) + 1)
 
     def add(self, element):
+        print(f"Añadiendo {element} al vector de bits...")
         if element >= self.size:
-            raise ValueError("Element out of range")
+            raise ValueError("Elemento fuera de rango")
         index = element // 32
         bit = element % 32
         self.vector[index] |= (1 << bit)
+        print(f"Se añadió {element} al vector de bits.")
+        self.print_vector()
 
     def remove(self, element):
+        print(f"Eliminando {element} del vector de bits...")
         if element >= self.size:
-            raise ValueError("Element out of range")
+            raise ValueError("Elemento fuera de rango")
         index = element // 32
         bit = element % 32
         self.vector[index] &= ~(1 << bit)
+        print(f"Se eliminó {element} del vector de bits.")
+        self.print_vector()
 
     def contains(self, element):
+        print(f"Buscando {element} en el vector de bits...")
         if element >= self.size:
-            raise ValueError("Element out of range")
+            raise ValueError("Elemento fuera de rango")
         index = element // 32
         bit = element % 32
-        return (self.vector[index] & (1 << bit)) != 0
+        found = (self.vector[index] & (1 << bit)) != 0
+        print(f"{element} {'se encontró' if found else 'no se encontró'} en el vector de bits.")
+        return found
 
-# Ejemplo de uso
+    def print_vector(self):
+        print("Estado actual del vector de bits:")
+        for i, bits in enumerate(self.vector):
+            print(f"Bloque {i}: {bin(bits)[2:].zfill(32)}")
+
+# Ejemplo de uso del vector de bits
 bit_vector = BitVector(100)
 
 # Agregar elementos
